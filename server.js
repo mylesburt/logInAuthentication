@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -12,6 +13,11 @@ app.listen(PORT, () => console.log(`Server is running on Port: ${PORT}`));
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: ["http://localhost3000"],
+  })
+);
 
 //Connecting to MongoDB
 mongoose.connect(
