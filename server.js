@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
@@ -9,9 +10,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on Port: ${PORT}`));
 
+app.use(express.json());
+app.use(cookieParser());
+
 //Connecting to MongoDB
 mongoose.connect(
-  process.env.MONGODB,
+  process.env.MONGO_DB,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -21,3 +25,7 @@ mongoose.connect(
     console.log("Connected to MongoDB!");
   }
 );
+
+//Setting up routes
+app.use("/auth", require("./routers/userRouter"));
+app.use("/customer", require("./routers/customerRouter"));
